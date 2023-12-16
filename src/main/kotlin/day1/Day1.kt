@@ -20,34 +20,6 @@ class Day1(private val filePath: String = "src/main/kotlin/day1/input.txt") {
         return lineList.sum()
     }
 
-    private fun toDigit(word: String): Int {
-        return when (word) {
-            "one" -> 1
-            "two" -> 2
-            "three" -> 3
-            "four" -> 4
-            "five" -> 5
-            "six" -> 6
-            "seven" -> 7
-            "eight" -> 8
-            "nine" -> 9
-            else -> throw Exception("Invalid word: $word")
-        }
-    }
-
-    private val digitWords = mapOf(
-        "zero" to "0",
-        "one" to "1",
-        "two" to "2",
-        "three" to "3",
-        "four" to "4",
-        "five" to "5",
-        "six" to "6",
-        "seven" to "7",
-        "eight" to "8",
-        "nine" to "9"
-    )
-
     fun task2(): Int {
         val result = mutableListOf<Int>()
         val inputStream: InputStream = File(filePath).inputStream()
