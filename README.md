@@ -12,7 +12,7 @@
 
 [x] day 4
 
-[-] day 5
+[x] day 5
 
 [] day 6
 

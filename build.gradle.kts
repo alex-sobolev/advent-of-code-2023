@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.21"
 }
 
-group = "org.example"
+group = "adventofcode2023"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }
 
 tasks.test {
