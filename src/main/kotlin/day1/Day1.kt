@@ -37,6 +37,8 @@ class Day1(private val filePath: String = "src/main/kotlin/day1/input.txt") {
             "nine"
         ) + (0..9).map { it.toString() }
 
+        println("wordsAndDigits: $wordsAndDigits")
+
         inputStream.bufferedReader().forEachLine { line ->
             val matches = mutableListOf<Int>()
 
