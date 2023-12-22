@@ -20,7 +20,7 @@
 
 [x] day 8
 
-[-] day 9
+[x] day 9
 
 [] day 10
 
