@@ -53,8 +53,6 @@ class Task2Optimized(private val filePath: String = "src/main/kotlin/day8/input.
             cycleSizes.add(stepsCount)
         }
 
-        println("cycleSizes: $cycleSizes")
-
         return listLcm(cycleSizes)
     }
 
@@ -82,8 +80,11 @@ class Task2Optimized(private val filePath: String = "src/main/kotlin/day8/input.
 
 fun main() {
     val test = Task2Optimized("src/main/kotlin/day8/input4.txt")
-    println("task2 test: ${test.solve()}") // 6
+//    println("task2 test: ${test.solve()}") // 6
 
     val task2 = Task2Optimized()
+    val start = System.currentTimeMillis()
     println("task 2: ${task2.solve()}") // 14299763833181
+    val end = System.currentTimeMillis()
+    println("time: ${end - start} ms")
 }
