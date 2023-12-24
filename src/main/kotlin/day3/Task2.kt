@@ -143,7 +143,7 @@ class Task2(private val filePath: String = "src/main/kotlin/day3/input.txt") {
                         topDiagonalRightNum,
                         bottomDiagonalLeftNum,
                         bottomDiagonalRightNum
-                    ).map { it.toInt() }
+                    )
 
                     if (nums.size == 2) {
                         validNums.add(nums[0] * nums[1])

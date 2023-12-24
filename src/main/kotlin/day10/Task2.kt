@@ -2,14 +2,27 @@ package adventofcode2023.day10
 
 import java.io.File
 
-class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
+class Task2(private val filePath: String = "src/main/kotlin/day10/input.txt") {
     fun solve(): Int {
         val input = File(filePath).readLines()
+        val (graph, visited) = traverseMap(input)
 
-        return traverseMap(input)
+        var count = 0
+
+        for (row in graph.indices) {
+            for (col in 0 until graph[0].length) {
+                val pointCrossings = countCrossingsForPoint(graph, visited, row, col)
+
+                if (pointCrossings % 2 != 0) {
+                    count++
+                }
+            }
+        }
+
+        return count
     }
 
-    private val connectionMap = mapOf<Char, Pair<Char, Char>>(
+    private val connectionMap = mapOf(
         '|' to Pair('N', 'S'), // top, bottom
         '-' to Pair('E', 'W'), // right, left
         'L' to Pair('N', 'E'), // top, right
@@ -20,7 +33,23 @@ class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
 
     private data class Point(val row: Int, val col: Int, val connection: Char, val distance: Int)
 
-    private fun traverseMap(graph: List<String>): Int {
+    private fun countCrossingsForPoint(graph: List<String>, visited: Set<Pair<Int, Int>>, row: Int, col: Int): Int {
+        val line = graph[row]
+        val cell = line[col]
+        var crossings = 0
+
+        if (cell == '.') {
+            for (i in 0 until col) {
+                if (row to i in visited && (line[i] == 'J' || line[i] == 'L' || line[i] == '|')) {
+                    crossings++
+                }
+            }
+        }
+
+        return crossings
+    }
+
+    private fun traverseMap(graph: List<String>): Pair<List<String>, Set<Pair<Int, Int>>> {
         val (startingRow, startingCol) = getStartingPoint(graph)
         val startingElem = getElemType(graph, startingRow, startingCol)
 
@@ -28,6 +57,7 @@ class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
         queue.add(Point(startingRow, startingCol, startingElem, 0))
 
         val visited = mutableSetOf<Pair<Int, Int>>()
+        visited.add(startingRow to startingCol)
         val distances = mutableListOf<Int>()
 
         fun moveToNextPoint(nextMove: Pair<Int, Int>?, distance: Int) {
@@ -55,7 +85,21 @@ class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
             moveToNextPoint(nextMove2, point.distance)
         }
 
-        return distances.max()
+        val updatedGraph = graph.toMutableList()
+
+        for (row in graph.indices) {
+            for (col in 0 until graph[0].length) {
+                if (graph[row][col] == 'S') {
+                    updatedGraph[row] = updatedGraph[row].replaceRange(col, col + 1, startingElem.toString())
+                }
+
+                if (row to col !in visited) {
+                    updatedGraph[row] = updatedGraph[row].replaceRange(col, col + 1, ".")
+                }
+            }
+        }
+
+        return Pair(updatedGraph, visited)
     }
 
     private fun getNextMove(graph: List<String>, row: Int, col: Int, direction: Char): Pair<Int, Int>? {
@@ -86,7 +130,7 @@ class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
         return Pair(0, 0)
     }
 
-    // get element type based on its neighbours
+    // get `S` element type based on its neighbours
     private fun getElemType(graph: List<String>, row: Int, col: Int): Char {
         val height = graph.size
         val width = graph[0].length
@@ -127,12 +171,15 @@ class Task1(private val filePath: String = "src/main/kotlin/day10/input.txt") {
 }
 
 fun main() {
-    val test1 = Task1("src/main/kotlin/day10/input3.txt")
-    println("task1 test1: ${test1.solve()}") // 4
+    val test1 = Task2("src/main/kotlin/day10/input4.txt")
+    println("task2 test1: ${test1.solve()}") // 4
 
-    val test2 = Task1("src/main/kotlin/day10/input2.txt")
-    println("task1 test2: ${test2.solve()}") // 8
+    val test2 = Task2("src/main/kotlin/day10/input5.txt")
+    println("task2 test2: ${test2.solve()}") // 8
 
-    val task1 = Task1()
-    println("task 1: ${task1.solve()}") // 6823
+    val test3 = Task2("src/main/kotlin/day10/input6.txt")
+    println("task2 test3: ${test3.solve()}") // 10
+
+    val task2 = Task2()
+    println("task 2: ${task2.solve()}") // 415
 }
