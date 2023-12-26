@@ -4,14 +4,14 @@ import java.io.File
 
 class Task2(private val filePath: String = "src/main/kotlin/day1/input.txt") {
     fun solve(): Int {
-        val result = mutableListOf<Int>()
+        var result = 0
 
         File(filePath).bufferedReader().forEachLine { line ->
             val num = findFirstAndLastDigits(line)
-            result.add(num)
+            result += num
         }
 
-        return result.sum()
+        return result
     }
 
     private val digitDict = mapOf(
